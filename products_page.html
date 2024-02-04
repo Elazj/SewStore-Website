@@ -1,0 +1,66 @@
+<?php
+// Database connection
+include 'db_conn.php';
+
+$product_id = $_GET['id'] ?? 0; // Get the product ID from URL
+$sql = "SELECT * FROM products WHERE product_id = $product_id";
+$result = $conn->query($sql);
+$product = $result->fetch_assoc();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>SewStore | All Your Sewing Materials Available</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <section id="header">
+        <a href="index.html"><span class="text-primary"><em>Sew</span>Store</em></a>
+
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a class="current" href="products.html">Products</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="account.html">Account</a></li>
+                <li id="lg-bag"><a href="cart.html"><i class="fas fa-shopping-bag"></i></a></li>
+                <a href="" id="close"><i class="fas fa-times"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fas fa-shopping-bag"></i></a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+    <!-- Product Detail Section -->
+    <section id="product-detail" class="section-p1">
+        <?php if ($product) : ?>
+            <div class="single-product">
+                <img src="<?php echo $product['image_url']; ?>" alt="<?php echo $product['name']; ?>">
+                <div class="single-product-desc">
+                    <h4><?php echo $product['name']; ?></h4>
+                    <h2><?php echo $product['price']; ?></h2>
+                    <p><?php echo $product['description']; ?></p>
+                    <button class="btn">Add to Cart</button>
+                    <!-- More product details here -->
+                </div>
+            </div>
+        <?php else : ?>
+            <p>Product not found.</p>
+        <?php endif; ?>
+    </section>
+
+    <!-- [Your existing footer code] -->
+    <script src="script.js"></script>
+</body>
+
+</html>
